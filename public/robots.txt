@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://missglam-jambi.pages.dev/sitemap-index.xml
