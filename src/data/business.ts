@@ -16,7 +16,7 @@ export const business = {
   instagram: 'https://www.instagram.com/missglam_id',
   instagramLabel: '@missglam_id (akun pusat)',
   title: 'Miss Glam Jambi — Kosmetik Original Broni & Mayang',
-  description: 'Miss Glam Jambi 2 cabang (Broni & Mayang): kosmetik original PT Bersama Glamindo. Cek stok via WA Broni, harga estimasi.',
+  description: 'Miss Glam Jambi 2 cabang Broni & Mayang Kota Baru: kosmetik original PT Bersama Glamindo. Cek stok WA Broni, order Shopee & TikTok.',
   canonicalPath: '/',
   ogImage: '/images/missglam-hero.jpg',
 };

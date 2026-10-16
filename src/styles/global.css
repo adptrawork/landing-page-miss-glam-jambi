@@ -1,31 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
+:root { --ease-premium: cubic-bezier(0.16, 1, 0.3, 1); }
 html { scroll-behavior: smooth; }
-
 body {
-  font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
-  background: #f9fafb;
-  color: #09090b;
+  font-family: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
+  background: #f6faf7; color: #09090b;
   -webkit-font-smoothing: antialiased;
 }
-
-.font-mono-num { font-family: 'JetBrains Mono', ui-monospace, monospace; }
-
+.font-mono-num { font-family: 'Satoshi', ui-sans-serif, system-ui, sans-serif; font-variant-numeric: tabular-nums; }
 .reveal { animation: rise 0.7s var(--ease-premium) both; }
-@keyframes rise {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal { animation: none; }
-  html { scroll-behavior: auto; }
-}
+.d-1 { animation-delay: 0.06s; } .d-2 { animation-delay: 0.12s; }
+.d-3 { animation-delay: 0.18s; } .d-4 { animation-delay: 0.24s; }
+.d-5 { animation-delay: 0.3s; } .d-6 { animation-delay: 0.36s; }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+/* kinetic marquee — transform only */
+.marquee { overflow: hidden; white-space: nowrap; }
+.marquee-track { display: inline-flex; gap: 2.5rem; padding-right: 2.5rem; animation: slide 22s linear infinite; will-change: transform; }
+.marquee:hover .marquee-track { animation-direction: reverse; }
+@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+img { background: #f4f4f5; }
+.snap-row { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+.snap-row > * { scroll-snap-align: start; }
+@media (prefers-reduced-motion: reduce) { .reveal, .marquee-track { animation: none; } html { scroll-behavior: auto; } }

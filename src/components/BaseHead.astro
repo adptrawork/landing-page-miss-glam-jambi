@@ -1,13 +1,13 @@
 ---
-interface Props {
-  title: string;
-  description: string;
-  canonicalUrl: string;
-  image?: string;
-}
+interface Props { title: string; description: string; canonicalUrl: string; image?: string; }
 import { business } from '../data/business';
 const { title, description, canonicalUrl, image = business.ogImage } = Astro.props;
 const ogImage = new URL(image, Astro.site ?? Astro.url).toString();
+const faq = [
+  { q: 'Miss Glam Jambi ada di mana saja?', a: 'Dua cabang aktif: Broni di sebelah UNBARI dan Mayang di Jl Ir H Juanda No.10B Simpang III Sipin, Kota Baru. Stok bisa dicek silang antar cabang.' },
+  { q: 'Apakah produk Miss Glam original?', a: 'Ya. Miss Glam berada di bawah PT Bersama Glamindo dengan website resmi missglam.id serta akun Instagram, TikTok, dan Shopee resmi.' },
+  { q: 'Bagaimana order cepat via cabang Broni?', a: 'Chat WA Broni 0813-6845-3311 dengan nama produk. Admin membantu cek stok Broni atau Mayang sebelum Anda datang.' },
+];
 ---
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -23,20 +23,22 @@ const ogImage = new URL(image, Astro.site ?? Astro.url).toString();
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImage} />
+<meta property="og:locale" content="id_ID" />
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={canonicalUrl} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={ogImage} />
 <script type="application/ld+json" set:html={JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Store",
-  name: business.name,
-  url: Astro.site?.toString(),
-  image: ogImage,
-  description: description,
+  "@context": "https://schema.org", "@type": "Store",
+  name: business.name, alternateName: "Miss Glam Broni & Mayang",
+  branchOf: { "@type": "Organization", name: "PT Bersama Glamindo", url: "https://missglam.id" },
+  url: Astro.site?.toString(), image: ogImage, description: description,
   address: { "@type": "PostalAddress", streetAddress: business.address, addressLocality: business.city, addressRegion: "Jambi", addressCountry: "ID" },
-  telephone: business.phone,
-  openingHours: business.hours,
+  telephone: business.phone, openingHours: "Mo-Su 09:30-22:30",
   aggregateRating: { "@type": "AggregateRating", ratingValue: business.rating, reviewCount: business.reviewCount }
+})} />
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org", "@type": "FAQPage",
+  mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } }))
 })} />

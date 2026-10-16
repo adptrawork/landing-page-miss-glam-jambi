@@ -1,97 +1,68 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { business, products, waLink } from '../data/business';
+import { business, products, promos, waLink } from '../data/business';
 const heroCta = waLink(`Halo ${business.name}, apakah stok produk best seller ready?`);
-const featured = products.slice(0, 4);
+const featured = products.slice(0, 6);
+const marquee = [...promos, ...promos];
 ---
 <BaseLayout title={business.title} description={business.description} canonicalPath="/" image={business.ogImage}>
+  <!-- kinetic marquee promo -->
+  <div class="marquee bg-emerald-700 text-white py-2.5 text-sm font-medium" aria-hidden="true">
+    <div class="marquee-track">
+      {marquee.map((m) => (<span>{m.title} — {m.status}</span>))}
+    </div>
+  </div>
+
+  <!-- HERO mirror: visual kiri, teks kanan -->
   <section class="max-w-7xl mx-auto px-4 w-full">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center min-h-[88dvh] py-10">
-      <div class="md:col-span-7">
-        <p class="flex items-center gap-2 text-sm font-medium text-rose-700">
-          <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128 16l36 74 82 12-59 58 14 82-73-38-73 38 14-82-59-58 82-12z"/></svg>
-          <span class="font-mono-num">{business.rating}</span>
-          <span class="text-zinc-500">• {business.category} • {business.city}</span>
+      <div class="md:col-span-5 order-1 reveal">
+        <div class="rounded-[2.5rem] overflow-hidden border border-slate-200/50 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.08)] bg-zinc-100 aspect-[4/5]">
+          <img src="/images/missglam-hero.jpg" alt="Etalase resmi Miss Glam Jambi — foto perusahaan" width="800" height="1000" loading="eager" class="w-full h-full object-cover" />
+        </div>
+        <div class="mt-3 flex gap-3">
+          <div class="rounded-2xl overflow-hidden bg-zinc-100 aspect-square w-1/2"><img src="/images/missglam-toko-2.jpg" alt="Suasana dalam toko Miss Glam — foto resmi perusahaan" width="400" height="400" loading="lazy" class="w-full h-full object-cover" /></div>
+          <div class="rounded-2xl overflow-hidden bg-zinc-100 aspect-square w-1/2"><img src="/images/missglam-toko-3.jpg" alt="Interior toko Miss Glam — foto resmi perusahaan" width="400" height="400" loading="lazy" class="w-full h-full object-cover" /></div>
+        </div>
+      </div>
+      <div class="md:col-span-7 order-2 reveal d-1">
+        <p class="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-emerald-700">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6-5.4-3-5.4 3 1.1-6L3.2 9.4l6.1-.8z"/></svg>
+          <span>{business.rating} • {business.category} • 2 Cabang</span>
         </p>
-        <h1 class="mt-4 text-4xl md:text-6xl tracking-tighter leading-none font-bold">Miss Glam Jambi — Kosmetik Original 2 Cabang</h1>
-        <p class="mt-5 text-base text-gray-600 leading-relaxed max-w-[65ch]">Cabang Broni (sebelah UNBARI) & Mayang. Kosmetik original PT Bersama Glamindo — cek stok via WA Broni 0813-6845-3311.</p>
+        <h1 class="mt-4 text-4xl md:text-6xl tracking-tighter leading-none font-black uppercase">Miss Glam Jambi — Kosmetik Original 2 Cabang</h1>
+        <p class="mt-5 text-base text-gray-600 leading-relaxed max-w-[65ch]">Broni sebelah UNBARI & Mayang Simpang III Sipin. Naungan PT Bersama Glamindo — stok bisa dicek silang antar cabang via WhatsApp Broni.</p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href={heroCta} class="bg-rose-700 text-white px-7 py-3.5 rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">Pesan via WhatsApp</a>
+          <a href={heroCta} class="bg-emerald-700 text-white px-7 py-3.5 rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">Pesan via WhatsApp</a>
           <a href="/katalog" class="border border-zinc-300 px-7 py-3.5 rounded-full font-medium transition-all duration-300 hover:border-zinc-950 active:scale-[0.98]">Lihat Katalog</a>
-          <a href="/promo" class="border border-zinc-300 px-7 py-3.5 rounded-full font-medium transition-all duration-300 hover:border-zinc-950 active:scale-[0.98]">Lihat Promo</a>
         </div>
-        <div class="mt-8 flex divide-x divide-zinc-200 border-t border-zinc-200 pt-5 text-sm">
-          <div class="pr-6"><p class="font-mono-num font-semibold">{business.reviewCount}+</p><p class="text-zinc-500">Ulasan</p></div>
-          <div class="px-6"><p class="font-mono-num font-semibold">{products.length}</p><p class="text-zinc-500">Produk Katalog</p></div>
-          <div class="pl-6"><p class="font-mono-num font-semibold">WA</p><p class="text-zinc-500">Order Cepat</p></div>
-        </div>
-      </div>
-      <div class="md:col-span-5">
-        <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
-          <div class="rounded-3xl overflow-hidden bg-zinc-100 aspect-[4/3]">
-            <img src="/images/missglam-hero.jpg" alt="Gerai toko Miss Glam — foto resmi dari situs perusahaan" width="800" height="450" loading="eager" class="w-full h-full object-cover" />
-          </div>
-          <p class="mt-3 text-xs text-zinc-400">Sumber: missglam.id — ganti foto gerai Jambi bila tersedia</p>
-          <p class="mt-4 text-lg font-semibold tracking-tight">2 Cabang: Broni & Mayang</p>
-          <p class="mt-2 text-base text-gray-600 leading-relaxed">Foto gerai resmi dari situs perusahaan. Stok Broni kosong? Admin bantu cekkan cabang Mayang via WA.</p>
-        </div>
+        <dl class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div class="bg-white border border-slate-200/50 rounded-3xl p-5 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"><dt class="font-bold">Cabang Broni</dt><dd class="mt-1 text-base text-gray-600">Sebelah UNBARI • {business.hours}</dd></div>
+          <div class="bg-white border border-slate-200/50 rounded-3xl p-5 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"><dt class="font-bold">Cabang Mayang</dt><dd class="mt-1 text-base text-gray-600">Jl Ir H Juanda No.10B, Kota Baru</dd></div>
+        </dl>
       </div>
     </div>
   </section>
 
-  <section class="max-w-7xl mx-auto px-4 py-8 w-full">
-    <p class="text-sm font-medium text-rose-700">Keunggulan</p>
-    <h2 class="mt-2 text-3xl md:text-4xl tracking-tighter leading-none font-bold max-w-[20ch]">Kenapa belanja di {business.name}?</h2>
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-12 gap-6">
-      <div class="md:col-span-7">
-        <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-8 md:p-10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1">
-          <svg width="28" height="28" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M128 24l96 36v64c0 56-40 96-96 108-56-12-96-52-96-108V60z"/><path d="M88 128l28 28 52-56"/></svg>
-          <p class="mt-4 font-semibold text-lg tracking-tight">Jaringan PT Bersama Glamindo</p>
-          <p class="mt-1 text-base text-gray-600 leading-relaxed max-w-[65ch]">Bagian dari perusahaan ritel kosmetik nasional (missglam.id) dengan 2 cabang aktif di Jambi.</p>
-        </div>
-      </div>
-      <div class="md:col-span-5">
-        <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-8 md:p-10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1">
-          <svg width="28" height="28" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M32 80l96-48 96 48v96l-96 48-96-48z"/><path d="M32 80l96 48 96-48M128 128v96"/></svg>
-          <p class="mt-4 font-semibold text-lg tracking-tight">Katalog + Tombol WA per Produk</p>
-          <p class="mt-1 text-base text-gray-600 leading-relaxed">Setiap produk punya tombol pesan dengan format chat rapi ke WhatsApp.</p>
-        </div>
-      </div>
-      <div class="md:col-span-5">
-        <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-8 md:p-10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1">
-          <svg width="28" height="28" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="32" y="80" width="192" height="48" rx="8"/><path d="M72 80v-16a56 56 0 01112 0v16M128 128v48"/></svg>
-          <p class="mt-4 font-semibold text-lg tracking-tight">Promo & Bundling</p>
-          <p class="mt-1 text-base text-gray-600 leading-relaxed">Cek halaman promo untuk bundling hemat bulan ini.</p>
-        </div>
-      </div>
-      <div class="md:col-span-7">
-        <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-8 md:p-10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1">
-          <svg width="28" height="28" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M48 96a80 80 0 01160 0c0 40-24 56-24 88H72c0-32-24-48-24-88z"/><path d="M96 208a32 32 0 0064 0"/></svg>
-          <p class="mt-4 font-semibold text-lg tracking-tight">Lokasi & Kontak Jelas</p>
-          <p class="mt-1 text-base text-gray-600 leading-relaxed max-w-[65ch]">{business.address} — {business.hours}. Rute via Google Maps di halaman tentang.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <!-- katalog: horizontal snap mobile + masonry 2fr/1fr desktop -->
   <section class="max-w-7xl mx-auto px-4 py-12 w-full">
-    <p class="text-sm font-medium text-rose-700">Sorotan Katalog</p>
-    <h2 class="mt-2 text-3xl md:text-4xl tracking-tighter leading-none font-bold">Produk Unggulan</h2>
-    <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Harga dapat berubah, konfirmasi via WA toko. <a class="underline underline-offset-4 text-zinc-900" href="/katalog">Lihat semua {products.length} produk</a></p>
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <p class="text-sm font-bold uppercase tracking-wide text-emerald-700 reveal">Sorotan Katalog</p>
+    <h2 class="mt-2 text-3xl md:text-4xl tracking-tighter leading-none font-black uppercase reveal d-1">Produk Unggulan</h2>
+    <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Harga estimasi, konfirmasi via WA. <a class="underline underline-offset-4 text-zinc-900" href="/katalog">Lihat semua {products.length} produk</a></p>
+    <div class="snap-row mt-8 flex gap-5 overflow-x-auto pb-4 md:grid md:grid-cols-3 md:overflow-visible" style="grid-template-columns:2fr 1fr 1fr">
       {featured.map((p, i) => (
-        <article class:list={["prod", i % 2 === 1 && "md:mt-10"]}>
-          <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1">
-            <div class="rounded-3xl overflow-hidden bg-zinc-100 aspect-[4/3]">
+        <article class:list={["reveal shrink-0 w-[78vw] md:w-auto", i === 0 && "md:row-span-2"]} style={`animation-delay:${0.08 + i * 0.07}s`}>
+          <div class="bg-white border border-slate-200/50 rounded-[2rem] p-5 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 h-full">
+            <div class:list={["rounded-3xl overflow-hidden bg-zinc-100", i === 0 ? "aspect-[4/5]" : "aspect-[4/3]"]}>
               <img src={p.image} alt={p.alt} width={p.w} height={p.h} loading="lazy" class="w-full h-full object-cover" />
             </div>
-            <p class="mt-4 text-xs font-medium text-rose-700">{p.badge} • {p.stock}</p>
-            <h3 class="mt-1 font-semibold text-lg tracking-tight">{p.name}</h3>
+            <p class="mt-4 text-xs font-bold uppercase tracking-wide text-emerald-700">{p.badge} • {p.stock}</p>
+            <h3 class="mt-1 font-bold text-lg tracking-tight">{p.name}</h3>
             <p class="mt-1 text-xs text-zinc-400">{p.source}</p>
-          </div>
-          <div class="mt-3 flex items-center justify-between px-2 gap-2">
-            <p class="font-mono-num font-semibold text-sm">{p.price}</p>
-            <a href={waLink(`Halo ${business.name}, saya mau pesan ${p.name} (${p.price}). Apakah ready?`)} class="bg-zinc-950 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]">Pesan via WA</a>
+            <div class="mt-3 flex items-center justify-between gap-2">
+              <p class="font-bold text-sm">{p.price}</p>
+              <a href={waLink(`Halo ${business.name}, saya mau pesan ${p.name} (${p.price}). Apakah ready?`)} class="bg-zinc-950 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]">Pesan</a>
+            </div>
           </div>
         </article>
       ))}
@@ -99,10 +70,10 @@ const featured = products.slice(0, 4);
   </section>
 
   <section class="max-w-7xl mx-auto px-4 py-14 w-full">
-    <div class="md:pl-[12vw]">
-      <h2 class="text-3xl md:text-4xl tracking-tighter leading-none font-bold max-w-[20ch]">Siap pesan tanpa antre?</h2>
-      <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Kirim format pesanan rapi via WhatsApp. Jelajahi <a class="underline underline-offset-4 text-zinc-900" href="/katalog">katalog</a>, <a class="underline underline-offset-4 text-zinc-900" href="/promo">promo</a>, dan <a class="underline underline-offset-4 text-zinc-900" href="/tentang">info toko</a>.</p>
-      <a href={waLink(`Halo ${business.name}, saya mau reservasi produk.`)} class="mt-6 inline-block bg-rose-700 text-white px-8 py-3.5 rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]">Chat WhatsApp Sekarang</a>
+    <div class="bg-zinc-950 text-white rounded-[2.5rem] p-8 md:p-12 reveal">
+      <h2 class="text-3xl md:text-4xl tracking-tighter leading-none font-black uppercase max-w-[20ch]">Stok Broni kosong? Tanya Mayang.</h2>
+      <p class="mt-3 text-base text-zinc-400 leading-relaxed max-w-[65ch]">Admin bantu cek silang dua cabang. Jelajahi <a class="underline underline-offset-4 text-white" href="/katalog">katalog</a>, <a class="underline underline-offset-4 text-white" href="/promo">promo</a>, <a class="underline underline-offset-4 text-white" href="/tentang">info toko</a>.</p>
+      <a href={waLink(`Halo ${business.name}, saya mau reservasi produk.`)} class="mt-6 inline-block bg-emerald-700 text-white px-8 py-3.5 rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]">Chat WhatsApp Sekarang</a>
     </div>
   </section>
 </BaseLayout>
