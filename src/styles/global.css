@@ -55,4 +55,46 @@ input, select, textarea { min-height: 48px; }
 .table-wrap { overflow-x: auto; max-width: 100%; }
 /* cegah teks terpotong di kartu */
 .card-clamp { overflow-wrap: anywhere; }
-@media (prefers-reduced-motion: reduce) { .marquee-track, .skeleton::after { animation: none; } }
+
+/* ==== runway lookbook hero — CSS-only (transform/opacity), kontras tinggi ==== */
+.lookbook { background: #0b0b0c; color: #fafafa; } /* near-black, bukan #000 */
+/* spesifik: `.lookbook .lookbook-display` menang dari utilitas Tailwind responsive
+   (sm:text-5xl menyetel line-height:1) supaya ritme vertikal tetap 0.9 */
+.lookbook .lookbook-display {
+  font-family: 'Times New Roman', ui-serif, Georgia, Cambria, serif;
+  font-weight: 700;
+  font-stretch: 87.5%;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
+}
+/* perforasi filmstrip */
+.film-rail {
+  height: 14px;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.22) 2.5px, transparent 3px);
+  background-size: 24px 14px;
+  background-repeat: repeat-x;
+  background-position: center;
+}
+/* indeks look bergaya (rule + leader titik-titik) */
+.look-index > li { border-top: 1px solid rgba(255, 255, 255, 0.14); }
+.look-index > li:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.14); }
+.look-index .row { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.7rem 0; }
+.look-index .leader {
+  flex: 1 1 auto; min-width: 1rem;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.3);
+  transform: translateY(-0.2rem);
+}
+/* frame: offset vertikal (imagery, bukan kartu) + zoom halus */
+.film-frame { margin-top: 0; }
+@media (min-width: 768px) { .film-frame { margin-top: var(--offset, 0px); } }
+.film-frame img { transition: transform 0.6s var(--ease-premium); }
+.film-frame:hover img { transform: scale(1.04); }
+.filmstrip:focus-visible { outline: 2px solid #34d399; outline-offset: 2px; }
+/* gerak minimal saat prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .lookbook *, .lookbook *::before, .lookbook *::after { animation: none !important; }
+  .film-frame img { transition-duration: 0.001ms; }
+  .film-frame:hover img { transform: none; }
+  .look-index .leader { transform: none; }
+}

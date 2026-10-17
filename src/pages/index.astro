@@ -13,6 +13,21 @@ const heroCta = waLink(`Halo ${business.name}, apakah stok produk best seller re
 const katalogCta = "/katalog";
 const featured = products.slice(0, 4);
 const embed = `https://maps.google.com/maps?q=${encodeURIComponent(business.mapsQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+// Lookbook runway: nomor look, gambar lokal WebP, tinggi offset (rasio tinggi-vertikal)
+const looks = [
+  { no: '01', img: '/images/missglam-hero.webp',   alt: `${business.name} — etalase toko`,                     cap: 'Etalase toko',    sub: 'Foto resmi',      w: 800, h: 450, off: '0px' },
+  { no: '02', img: '/images/missglam-toko-2.webp', alt: `${business.name} — rak produk perawatan di toko`,       cap: 'Rak produk',      sub: 'Dua cabang',      w: 800, h: 600, off: '46px' },
+  { no: '03', img: '/images/missglam-p1.webp',     alt: products[0].alt,                                        cap: 'Skintific',       sub: 'skintific.com',   w: 800, h: 800, off: '18px' },
+  { no: '04', img: '/images/missglam-toko-3.webp', alt: `${business.name} — etalase cabang toko`,                cap: 'Etalase cabang',  sub: 'Foto resmi',      w: 800, h: 600, off: '62px' },
+  { no: '05', img: '/images/missglam-p3.webp',     alt: products[2].alt,                                        cap: 'Facetology',      sub: 'facetology.id',   w: 800, h: 800, off: '28px' },
+];
+// Kategori kulit dipakai sebagai indeks bergaya (tanpa kartu seragam)
+const skin = [
+  { t: 'Brightening', d: 'Serum, moisturizer & toner untuk kulit kusam dan noda.' },
+  { t: 'Acne & Calming', d: 'Clay mask, serum & toner untuk jerawat dan kemerahan.' },
+  { t: 'Sunscreen & Daily', d: 'Tabir surya dan perawatan harian ringan.' },
+  { t: 'Lip & Makeup', d: 'Lip cream, bedak, dan riasan harian.' },
+];
 const trust = [
   { v: `${business.rating}/5.0`, l: `${business.reviewCount}+ ulasan Maps` },
   { v: "BPOM", l: "Original 100%" },
@@ -29,39 +44,88 @@ const faqs = [
   { q: "Apakah produk di Miss Glam original?", a: "Ya, produk original. Label Terverifikasi berarti data dicek dari sumber resmi brand; Estimasi berarti perkiraan — tanya sertifikasi BPOM tiap item via WA." },
   { q: "Bagaimana cara pesan?", a: "Pilih produk di katalog, klik Pesan via WA, lalu kirim format pesanan. Admin mengonfirmasi stok dan harga final sebelum Anda datang." },
   { q: "Apakah harga di web ini pasti?", a: "Belum — semua harga estimasi dan dapat berubah. Harga final selalu dikonfirmasi admin via WhatsApp." },
-  { q: "Jam buka dan alamatnya?", a: `{business.hours}. {business.address}. Stok silang antar cabang via WA.` },
+  { q: "Jam buka dan alamatnya?", a: `${business.hours}. ${business.address}. Stok silang antar cabang via WA.` },
 ];
 ---
-<!-- Ref: Awwwards Beauty nominees (Beauty Queen flagship, Soleil Noir Essentiality, Bridge Beauty SOTD): hero editorial besar + storytelling bahan + section ritual. | Dribbble Orvelia beauty shop + Musemind e-commerce: kategori masalah kulit, best-seller rail, badge BPOM, tutorial/guide. | Lapa Ninja beauty elements: hero CTA, value prop, features, visual, social proof, benefits, trust (BPOM/reseller), CTA berulang, kontak. -->
+<!-- Ref: Runway lookbook — Awwwards fashion/editorial hero (Vogue-ish masthead serif raksasa, indeks look bernomor, filmstrip frame) + pola lookbook label: nomor urut, caption mono, ritme vertikal kuat. -->
 <BaseLayout title={business.title} description={business.description} canonicalPath="/" image={business.ogImage}>
-  <!-- 01 Hero -->
-  <section class="max-w-7xl mx-auto px-4 w-full py-12 md:py-20" aria-labelledby="hero-h">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center">
-      <div class="md:col-span-7">
-        <p class="flex flex-wrap items-center gap-2 text-sm font-medium text-emerald-700">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6-5.4-3-5.4 3 1.1-6L3.2 9.4l6.1-.8z"/></svg>
-          <span class="font-mono">{business.rating} • {business.reviewCount}+ ulasan</span>
-          <span class="text-zinc-400">• {business.category} • {business.city}</span>
-        </p>
-        <h1 id="hero-h" class="mt-4 text-4xl md:text-6xl tracking-tighter leading-[1.05] font-black uppercase text-zinc-950">Miss Glam Jambi — Kosmetik Original 2 Cabang</h1>
-        <p class="mt-5 text-base text-gray-600 leading-relaxed max-w-[65ch]">Cabang Broni (sebelah UNBARI) & Mayang Kota Baru. Kosmetik original PT Bersama Glamindo — stok Broni kosong? Admin bantu cekkan Mayang via WhatsApp.</p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href={heroCta} class="bg-emerald-700 text-white inline-flex items-center justify-center px-7 min-h-[48px] rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">Pesan via WhatsApp</a>
-          <a href={katalogCta} class="inline-flex items-center justify-center border border-zinc-300 hover:border-zinc-950 text-zinc-950 px-7 min-h-[48px] rounded-full font-medium transition-all duration-300 active:scale-[0.98]">Lihat Katalog</a>
-        </div>
-        <p class="mt-6 font-mono text-xs tracking-widest uppercase text-zinc-400">BPOM Original • WA fast-respon • {business.addressStatus}</p>
+  <!-- 01 Hero — runway lookbook -->
+  <section class="lookbook w-full" aria-labelledby="hero-h">
+    <div class="mx-auto max-w-7xl px-4 w-full pt-10 pb-3 md:pt-14">
+      <div class="reveal d-1 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-white/15 pb-3">
+        <p class="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-emerald-300">Lookbook · {business.category} · {business.city}</p>
+        <p class="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-white/60">Edisi {business.rating}/5.0 · {business.reviewCount}+ ulasan</p>
       </div>
-      <div class="md:col-span-5">
-        <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
-          <div class="rounded-3xl overflow-hidden bg-zinc-100 aspect-[4/3] max-w-full">
-            <img src={business.ogImage} alt="{business.name} — etalase toko" width="800" height="600" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover" />
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-x-8 gap-y-9 pt-8 md:pt-11">
+        <div class="md:col-span-8">
+          <h1 id="hero-h" class="lookbook-display reveal d-2 text-[2.2rem] leading-[0.9] sm:text-5xl md:text-[3.7rem] lg:text-[4.7rem]">
+            <span class="block">Miss Glam</span>
+            <span class="block pl-[5%] md:pl-[9%]">Kosmetik Original</span>
+            <span class="block pl-[11%] md:pl-[19%] text-emerald-300">Broni &amp; Mayang</span>
+          </h1>
+          <p class="reveal d-3 mt-6 max-w-[54ch] text-base text-white/80 leading-relaxed">
+            Cabang Broni (sebelah UNBARI) &amp; Mayang Kota Baru. Kosmetik original PT Bersama Glamindo — stok Broni kosong? Admin bantu cekkan Mayang via WhatsApp.
+          </p>
+          <div class="reveal d-4 mt-7 flex flex-wrap gap-3">
+            <a href={heroCta} class="bg-emerald-400 text-zinc-950 inline-flex items-center justify-center px-7 min-h-[48px] rounded-full font-semibold transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">Pesan via WhatsApp</a>
+            <a href={katalogCta} class="inline-flex items-center justify-center border border-white/35 text-white px-7 min-h-[48px] rounded-full font-medium transition-colors duration-300 hover:bg-white hover:text-zinc-950 focus-visible:bg-white focus-visible:text-zinc-950">Lihat Katalog</a>
           </div>
-          <p class="mt-3 text-xs text-zinc-400">Foto: missglam.id / foto resmi perusahaan</p>
-          <p class="mt-4 text-lg font-semibold tracking-tight text-zinc-950">Katalog online — tanpa antre</p>
-          <p class="mt-2 text-base text-gray-600 leading-relaxed">Stok silang dua cabang, order Shopee & TikTok, tombol pesan per produk langsung ke WhatsApp Broni.</p>
+          <p class="reveal d-5 mt-6 font-mono text-[0.68rem] uppercase tracking-[0.26em] text-white/65">
+            BPOM Original · WA fast-respon · Alamat {business.addressStatus} · {business.hours}
+          </p>
         </div>
+
+        <aside class="md:col-span-4" aria-labelledby="look-idx-h">
+          <p id="look-idx-h" class="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-white/60">Look index</p>
+          <ol class="look-index mt-3">
+            {looks.map((l) => (
+              <li class="reveal">
+                <span class="row">
+                  <span class="font-mono text-[0.7rem] tracking-[0.1em] tabular-nums text-emerald-300">{l.no}</span>
+                  <span class="text-sm text-white/90">{l.cap}</span>
+                  <span class="leader" aria-hidden="true"></span>
+                  <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-white/50">{l.sub}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+          <p class="mt-4 font-mono text-[0.62rem] uppercase tracking-[0.22em] text-white/45">Foto resmi toko &amp; brand</p>
+        </aside>
       </div>
     </div>
+
+    <div class="film-rail mt-6" aria-hidden="true"></div>
+    <ol class="filmstrip snap-row flex items-start gap-3 md:gap-4 overflow-x-auto px-4 md:px-0 pt-4 pb-3" tabindex="0" aria-label="Lookbook — strip foto toko dan produk">
+      {looks.map((l, i) => (
+        <li class="film-frame shrink-0 w-[62vw] sm:w-[40vw] md:w-auto md:flex-1" style={`--offset:${l.off}`}>
+          <figure class="h-full">
+            <div class="relative overflow-hidden border border-white/12 bg-white/5 aspect-[3/4]">
+              <img
+                src={l.img}
+                alt={l.alt}
+                width={l.w}
+                height={l.h}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                fetchpriority={i === 0 ? 'high' : 'auto'}
+                decoding="async"
+                class="w-full h-full object-cover"
+              />
+              <span class="film-no font-mono text-[0.62rem] tracking-[0.22em] text-emerald-300 bg-zinc-950/75 px-2 py-1 rounded-sm">{l.no}</span>
+            </div>
+            <figcaption class="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+              <span class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-white/85">{l.cap}</span>
+              <span class="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-white/50">{l.sub}</span>
+            </figcaption>
+          </figure>
+        </li>
+      ))}
+    </ol>
+    <div class="film-rail" aria-hidden="true"></div>
+
+    <p class="mx-auto max-w-7xl px-4 w-full pt-3 pb-10 font-mono text-[0.62rem] uppercase tracking-[0.22em] text-white/45">
+      Harga estimasi — konfirmasi final via WA toko.
+    </p>
   </section>
 
   <Marquee items={marquee} />
@@ -71,35 +135,21 @@ const faqs = [
     <TrustStrip items={trust} />
   </section>
 
-  <!-- 03 Belanja berdasar masalah kulit -->
+  <!-- 03 Belanja berdasar masalah kulit — indeks bergaya (rule, bukan kartu seragam) -->
   <section class="max-w-7xl mx-auto px-4 w-full py-12 md:py-20" aria-labelledby="s-masalah">
     <div id="s-masalah"><SectionHead no="03" kicker="Belanja berdasar masalah" title="Mulai dari kebutuhan kulitmu" desc="Empat jalur cepat ke katalog — tiap produk berlabel Terverifikasi, Estimasi, atau Info menyusul." /></div>
-    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <a href="/katalog" class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] block transition-all duration-300 hover:-translate-y-1">
-        <p class="font-mono text-xs tracking-[0.2em] text-emerald-700">01</p>
-        <p class="mt-3 font-semibold text-lg tracking-tight text-zinc-950">Brightening</p>
-        <p class="mt-1 text-base text-gray-600 leading-relaxed">Serum, moisturizer & toner untuk kulit kusam dan noda.</p>
-        <p class="mt-3 text-sm font-medium underline underline-offset-4 text-zinc-950">Lihat di katalog</p>
-      </a>
-      <a href="/katalog" class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] block transition-all duration-300 hover:-translate-y-1">
-        <p class="font-mono text-xs tracking-[0.2em] text-emerald-700">02</p>
-        <p class="mt-3 font-semibold text-lg tracking-tight text-zinc-950">Acne & Calming</p>
-        <p class="mt-1 text-base text-gray-600 leading-relaxed">Clay mask, serum & toner untuk jerawat dan kemerahan.</p>
-        <p class="mt-3 text-sm font-medium underline underline-offset-4 text-zinc-950">Lihat di katalog</p>
-      </a>
-      <a href="/katalog" class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] block transition-all duration-300 hover:-translate-y-1">
-        <p class="font-mono text-xs tracking-[0.2em] text-emerald-700">03</p>
-        <p class="mt-3 font-semibold text-lg tracking-tight text-zinc-950">Sunscreen & Daily</p>
-        <p class="mt-1 text-base text-gray-600 leading-relaxed">Tabir surya dan perawatan harian ringan.</p>
-        <p class="mt-3 text-sm font-medium underline underline-offset-4 text-zinc-950">Lihat di katalog</p>
-      </a>
-      <a href="/katalog" class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] block transition-all duration-300 hover:-translate-y-1">
-        <p class="font-mono text-xs tracking-[0.2em] text-emerald-700">04</p>
-        <p class="mt-3 font-semibold text-lg tracking-tight text-zinc-950">Lip & Makeup</p>
-        <p class="mt-1 text-base text-gray-600 leading-relaxed">Lip cream, bedak, dan riasan harian.</p>
-        <p class="mt-3 text-sm font-medium underline underline-offset-4 text-zinc-950">Lihat di katalog</p>
-      </a>
-    </div>
+    <ul class="mt-8 border-t border-zinc-200">
+      {skin.map((c, i) => (
+        <li class="border-b border-zinc-200">
+          <a href="/katalog" class="group flex flex-wrap items-baseline gap-x-4 gap-y-1 py-5 px-2 -mx-2 transition-colors duration-300 hover:bg-white focus-visible:bg-white">
+            <span class="font-mono text-xs tabular-nums tracking-[0.2em] text-emerald-700">0{i + 1}</span>
+            <span class="font-semibold text-lg tracking-tight text-zinc-950">{c.t}</span>
+            <span class="text-base text-zinc-600 leading-relaxed">{c.d}</span>
+            <span class="ml-auto font-mono text-[0.66rem] uppercase tracking-[0.22em] text-zinc-500 group-hover:text-emerald-700">Lihat di katalog</span>
+          </a>
+        </li>
+      ))}
+    </ul>
   </section>
 
   <!-- 04 Best seller -->
@@ -119,26 +169,26 @@ const faqs = [
 
   <!-- 06 Testimoni + Maps -->
   <section class="max-w-7xl mx-auto px-4 w-full py-12 md:py-20" aria-labelledby="s-testimoni">
-    <div id="s-testimoni"><SectionHead no="06" kicker="Testimoni & lokasi" title="Kata pembeli, titik lokasinya" desc={`{business.address} — {business.hours}.`} /></div>
+    <div id="s-testimoni"><SectionHead no="06" kicker="Testimoni & lokasi" title="Kata pembeli, titik lokasinya" desc={`${business.address} — ${business.hours}.`} /></div>
     <div class="mt-8 grid grid-cols-1 md:grid-cols-12 gap-6">
       <div class="md:col-span-5 flex flex-col gap-6">
         <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
-          <p class="font-mono text-4xl font-semibold text-zinc-950">{business.rating}<span class="text-lg text-zinc-400">/5.0</span></p>
+          <p class="font-mono text-4xl font-semibold text-zinc-950">{business.rating}<span class="text-lg text-zinc-500">/5.0</span></p>
           <p class="mt-1 text-sm text-gray-600">dari {business.reviewCount}+ ulasan Google Maps</p>
-          <p class="mt-3 text-xs text-zinc-400">Ringkasan tema ulasan; nama disingkat.</p>
+          <p class="mt-3 text-xs text-zinc-500">Ringkasan tema ulasan; nama disingkat.</p>
         </div>
         <figure class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
           <blockquote class="text-base text-gray-600 leading-relaxed">“Stok yang dicari ready, admin fast-respon di WA. Datang tinggal ambil.”</blockquote>
-          <figcaption class="mt-3 font-mono text-xs tracking-widest uppercase text-zinc-400">R*****a — pembeli</figcaption>
+          <figcaption class="mt-3 font-mono text-xs tracking-widest uppercase text-zinc-500">R*****a — pembeli</figcaption>
         </figure>
         <figure class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
           <blockquote class="text-base text-gray-600 leading-relaxed">“Stok Broni kosong, langsung dibantu cek Mayang. Produk original tersegel.”</blockquote>
-          <figcaption class="mt-3 font-mono text-xs tracking-widest uppercase text-zinc-400">A*****a, pelanggan Mayang</figcaption>
+          <figcaption class="mt-3 font-mono text-xs tracking-widest uppercase text-zinc-500">A*****a, pelanggan Mayang</figcaption>
         </figure>
       </div>
       <div class="md:col-span-7">
         <MapFacade embed={embed} />
-        <p class="mt-3 text-xs text-zinc-400">{business.address} — {business.hours}</p>
+        <p class="mt-3 text-xs text-zinc-500">{business.address} — {business.hours}</p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a href={business.mapsUrl} class="inline-flex items-center justify-center border border-zinc-300 hover:border-zinc-950 text-zinc-950 px-6 min-h-[48px] rounded-full text-sm font-medium">Buka di Google Maps</a>
           <a href={heroCta} class="bg-emerald-700 text-white inline-flex items-center justify-center px-6 min-h-[48px] rounded-full text-sm font-medium">Tanya stok via WA</a>

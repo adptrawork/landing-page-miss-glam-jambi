@@ -15,7 +15,7 @@ const badges = ['Semua', ...Array.from(new Set(products.map((p) => p.badge)))];
         <button data-filter={b} class:list={["filter-btn border px-5 min-h-[48px] rounded-full text-sm font-medium transition-all duration-300 active:scale-[0.98]", i === 0 ? "bg-zinc-950 text-white border-zinc-950" : "border-zinc-300 hover:border-zinc-950"]}>{b}</button>
       ))}
     </div>
-    <p id="filter-count" class="mt-4 font-mono text-xs tracking-widest uppercase text-zinc-400" aria-live="polite"></p>
+    <p id="filter-count" class="mt-4 font-mono text-xs tracking-widest uppercase text-zinc-500" aria-live="polite"></p>
     <div id="skel" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" aria-hidden="true">
       {[0,1,2,3].map(() => (
         <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6">
